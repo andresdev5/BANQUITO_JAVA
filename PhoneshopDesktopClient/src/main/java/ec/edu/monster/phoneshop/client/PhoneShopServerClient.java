@@ -13,18 +13,12 @@ public interface PhoneShopServerClient {
     AuthResponseDto login(AuthCredentialsDto credentials);
 
     @RequestLine("GET /movements")
-    @Headers({
-            "Content-Type: application/json",
-            "Authorization: Bearer {token}"
-    })
-    List<MovementDto> getMovements(@Param("token") String token);
+    @Headers("Content-Type: application/json")
+    List<MovementDto> getMovements();
 
     @RequestLine("POST /transactions/transfer")
-    @Headers({
-            "Content-Type: application/json",
-            "Authorization: Bearer {token}"
-    })
-    void transfer(@Param("token") String token, TransactionDto transaction);
+    @Headers("Content-Type: application/json")
+    void transfer(TransactionDto transaction);
 
     @RequestLine("POST /public/credit/check")
     @Headers("Content-Type: application/json")

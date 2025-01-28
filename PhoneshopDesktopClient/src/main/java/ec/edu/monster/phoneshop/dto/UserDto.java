@@ -20,4 +20,5 @@ public class UserDto {
     private String identificationNumber;
     private String email;
     private UserProfileDto profile;
+    private RoleDto role;
 }

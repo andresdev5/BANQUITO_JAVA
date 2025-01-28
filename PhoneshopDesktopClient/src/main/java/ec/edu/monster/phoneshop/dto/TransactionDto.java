@@ -1,5 +1,6 @@
 package ec.edu.monster.phoneshop.dto;
 
+import ec.edu.monster.phoneshop.enums.MovementType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

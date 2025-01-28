@@ -7,9 +7,9 @@ import lombok.Data;
 @Builder
 public class AuthResponseDto {
     private String token;
+    private UserDto user;
     private String message;
     private int code;
-    private UserDto user;
 
     @Builder.Default
     private ResponseStatus status = ResponseStatus.SUCCESS;

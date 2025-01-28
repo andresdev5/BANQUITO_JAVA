@@ -13,7 +13,7 @@ import lombok.Setter;
 public class ApplicationContext {
     private static ApplicationContext instance;
 
-    private String serverIp = "localhost";
+    private String serverHost = "localhost";
     private String serverPort = "9001";
     private String token;
     private String identificationNumber;
@@ -34,8 +34,9 @@ public class ApplicationContext {
                 .decoder(new GsonDecoder())
                 .encoder(new GsonEncoder())
                 .errorDecoder(new FeignErrorDecoder())
+                .requestInterceptor(new FeignAuthInterceptor())
                 .logLevel(Logger.Level.FULL)
-                .target(clazz, "http://" + ((serverIp == null || serverIp.trim().isBlank()) ? "localhost" : serverIp) + ":"
+                .target(clazz, "http://" + ((serverHost == null || serverHost.trim().isBlank()) ? "localhost" : serverHost) + ":"
                         + ((serverPort == null || serverPort.trim().isBlank()) ? "9001" : serverPort));
     }
 }

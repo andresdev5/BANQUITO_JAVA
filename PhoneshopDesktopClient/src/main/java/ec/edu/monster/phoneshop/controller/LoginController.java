@@ -74,7 +74,7 @@ public class LoginController {
             return;
         }
 
-        applicationContext.setServerIp(serverIp);
+        applicationContext.setServerHost(serverIp);
         applicationContext.setServerPort(port);
 
         try {
