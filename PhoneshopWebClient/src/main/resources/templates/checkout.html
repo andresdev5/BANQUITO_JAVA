@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="es"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default.html}">
+<head>
+  <title>Proceder con el pago</title>
+</head>
+<body>
+<main layout:fragment="content">
+  <div th:if="${fsuccess}" class="alert alert-success" role="alert" th:text="${fsuccess}"></div>
+  <div th:if="${ferror}" class="alert alert-danger" role="alert" th:text="${ferror}"></div>
+
+  <div th:if="${purchaseResult != null}">
+    <div class="alert alert-info" role="alert">
+      <h2 class="alert-heading">Compra realizada con éxito</h2>
+      <p>Se ha generado una factura con los detalles de la compra.</p>
+      <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#invoiceModal">Ver factura</a>
+    </div>
+  </div>
+  <div class="products-form" th:if="${purchaseResult == null}">
+    <h2 class="mb-5">Proceder con el pago</h2>
+
+    <div class="checkout-container row">
+      <div class="products box-container col-md-8">
+        <div class="cart-item" th:each="item, index : ${@shoppingCart.items}">
+          <div class="row">
+            <div class="col-md-2">
+              <img th:src="${@appContext.serverApiUrl + item.product.imagePath}" th:alt="${item.product.name}" class="product-image">
+            </div>
+            <div class="col-md-10">
+              <div class="d-flex justify-content-between align-items-start mb-2">
+                <div>
+                  <h2 class="h5 mb-1" th:text="${item.product.name}"></h2>
+                  <div class="text-muted" th:text="${'$' + item.product.price}"></div>
+                </div>
+                <div class="h5" th:text="${'$' + item.total}"></div>
+              </div>
+              <div class="d-flex gap-3 mb-3">
+                <div class="quantity-control">
+                  <a th:href="${'/shopping-cart/remove/' + item.product.id + '?quantity=1&checkout=true'}">
+                    <i class="fa-solid fa-minus"></i>
+                  </a>
+                  <span th:text="${item.quantity}"></span>
+                  <a th:href="${'/shopping-cart/add/' + item.product.id + '?quantity=1&checkout=true'}">
+                    <i class="fa-solid fa-plus"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="action-buttons">
+                <a th:href="${'/shopping-cart/remove/' + item.product.id + '?checkout=true'}">
+                  <i class="bi bi-trash"></i> Eliminar
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="checkout-summary col-md-4">
+        <div class="box-container">
+          <form method="POST" action="/purchase">
+            <h3 class="h5">Resumen de la compra</h3>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div>Subtotal</div>
+              <div th:text="${'$' + #numbers.formatDecimal(@shoppingCart.totalPrice, 0, 'COMMA', 2, 'POINT')}"></div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div>IVA 15%</div>
+              <div th:text="${'$' + #numbers.formatDecimal((@shoppingCart.totalPrice * 0.15), 0, 'COMMA', 2, 'POINT')}"></div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div>Total</div>
+              <div th:text="${'$' + #numbers.formatDecimal(@shoppingCart.totalPrice * 0.15 + (@shoppingCart.totalPrice), 0, 'COMMA', 2, 'POINT')}"></div>
+            </div>
+            <div class="mb-3">
+              <label for="method" class="form-label">Método de pago</label>
+              <select class="form-select" id="method" name="method" required>
+                <option value="CASH">EFECTIVO</option>
+                <option value="CREDIT">CREDITO</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="months" class="form-label">Número de meses</label>
+              <input type="number" class="form-control" id="months" name="months" min="3" max="18" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Proceder al pago</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="box-container mt-5" th:if="${installments != null && installments.size > 0}">
+    <h2>Tabla amortizacion</h2>
+    <table class="table">
+      <thead class="thead-light">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Valor cuota</th>
+        <th scope="col">Interés pagado</th>
+        <th scope="col">Capital pagado</th>
+        <th scope="col">Saldo</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="installment, stat : ${installments}">
+        <th scope="row" th:text="${stat.count}"></th>
+        <td th:text="${installment.amount}"></td>
+        <td th:text="${installment.interest}"></td>
+        <td th:text="${installment.capital}"></td>
+        <td th:text="${installment.balance}"></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="modal fade modal-xl modal-dialog-scrollable" id="invoiceModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content" style="height: 92vh">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Factura</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div id="invoice-pdf-container" class="h-100"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<th:block layout:fragment="scripts">
+  <script type="text/javascript">
+    function checkPaymentMethod() {
+      if ($('#method').val() === 'CASH') {
+        $('#months').val('').prop('disabled', true);
+      } else {
+        $('#months').prop('disabled', false);
+      }
+    }
+
+    $(document).ready(() => {
+      checkPaymentMethod();
+
+      $('#method').on('change', function () {
+        checkPaymentMethod();
+      });
+    });
+  </script>
+  <script th:inline="javascript" th:if="${purchaseResult}">
+  /*<![CDATA[*/
+      const pdfFile = /*[[${@appContext.serverApiUrl + purchaseResult.invoicePath}]]*/ 'default';
+      console.log(pdfFile);
+      PDFObject.embed(pdfFile, "#invoice-pdf-container");
+
+      $(document).ready(() => {
+        $('#invoiceModal').modal('show');
+      });
+  /*]]>*/
+  </script>
+</th:block>
+</body>
+</html>

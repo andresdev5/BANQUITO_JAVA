@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/default.html}">
+<head>
+    <title>Inicio</title>
+</head>
+<body>
+    <main layout:fragment="content">
+        <div th:if="${fsuccess}" class="alert alert-success" role="alert" th:text="${fsuccess}"></div>
+        <div th:if="${ferror}" class="alert alert-danger" role="alert" th:text="${ferror}"></div>
+
+        <div class="user-movements">
+            <div class="d-flex justify-content-between align-items-center mb-5">
+                <h2>Productos disponibles</h2>
+                <a th:if="${authenticatedUser.role.name.equals('ADMIN')}" href="/add-product" class="btn btn-primary">Agregar producto</a>
+            </div>
+            <table class="table">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">Codigo</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Imagen</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${products.size() == 0}">
+                    <td colspan="5">
+                        <div class="alert alert-info" role="alert">No hay productos disponibles</div>
+                    </td>
+                </tr>
+                <tr th:each="product, index : ${products}">
+                    <!--/*@thymesVar id="authenticatedUser" type="ec.edu.monster.phoneshop.dto.UserDto"*/-->
+                    <th scope="row" th:text="${index.count}"></th>
+                    <td>
+                        <span th:text="${product.name}"></span>
+                    </td>
+                    <td>
+                        <span th:text="${'$' + product.price}"></span>
+                    </td>
+                    <td>
+                        <img th:src="${apiServerUrl + product.imagePath}" width="100" height="100" style="object-fit: contain" />
+                    </td>
+                    <td style="width: 19em">
+                        <a th:if="${authenticatedUser.role.name.equals('ADMIN')}" th:href="${'/edit-product/' + product.getId()}" class="btn btn-sm btn-secondary">Actualizar</a>
+                        <a th:if="${authenticatedUser.role.name.equals('ADMIN')}" th:href="${'/delete-product/' + product.getId()}" class="btn btn-sm btn-danger">Eliminar</a>
+                        <a class="btn btn-sm btn-primary" th:href="${'/shopping-cart/add/' + product.getId()}">
+                            Agregar al carrito
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="transaction-form">
+            <h3>Verificar Credito</h3>
+
+            <div th:if="${creditMessage}" class="alert alert-danger mt-2 mb-2" role="alert" th:text="${creditMessage}"></div>
+            <div th:if="${creditMaxAmount}" class="alert alert-info mt-2 mb-2" role="alert">Tienes un monto maximo de <span th:text="${creditMaxAmount}"></span></div>
+
+            <form method="POST" action="/checkCredit">
+                <div class="mb-3">
+                    <label for="amount" class="form-label">Monto a verificar</label>
+                    <input type="number" class="form-control" id="amount" name="amount" required>
+                </div>
+                <div class="d-flex flex-row justify-content-end mt-5">
+                    <!--/*@thymesVar id="authenticatedUser" type="ec.edu.monster.phoneshop.dto.UserDto"*/-->
+                    <input type="hidden" name="identificationNumber" th:value="${authenticatedUser.identificationNumber}">
+                    <button type="submit" class="btn btn-primary">Verificar</button>
+                </div>
+            </form>
+        </div>
+    </main>
+    <th:block layout:fragment="scripts">
+        <script th:if="${showCart}">
+            $(document).ready(() => {
+                setTimeout(() => {
+                    $('.shopping-cart-button').dropdown('toggle');
+                }, 100);
+            });
+        </script>
+    </th:block>
+</body>
+</html>

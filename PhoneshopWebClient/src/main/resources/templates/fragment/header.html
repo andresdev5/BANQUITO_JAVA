@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarButtons"
+                        aria-expanded="false" >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a class="navbar-brand" href="/">
+                    <i class="fa-solid fa-building-columns"></i>
+                </a>
+                <div class="collapse navbar-collapse" id="navbarButtons">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="/">PhoneShop</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex align-items-center ms-auto">
+                        <!--/*@thymesVar id="authenticatedUser" type="ec.edu.monster.phoneshop.dto.UserDto"*/-->
+                        <ul th:if="${authenticatedUser != null}" class="navbar-nav">
+                            <li class="nav-item dropdown me-4">
+                                <a class="shopping-cart-button fs-6 position-relative text-reset text-decoration-none" href="#" data-bs-auto-close="outside" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span>
+                                        <i class="fa-solid fa-shopping-cart"></i>
+                                    </span>
+                                    <span
+                                        th:if="${@shoppingCart.size > 0}"
+                                        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                        <span th:text="${@shoppingCart.totalProducts}"></span>
+                                    </span>
+                                </a>
+                                <ul class="dropdown-menu shopping-cart-dropdown" data-bs-auto-close="outside" style="right: 0; left: unset; width: 400px">
+                                    <li th:if="${@shoppingCart.size == 0}" class="dropdown-item">No hay productos en el carrito</li>
+                                    <li th:each="item, index : ${@shoppingCart.items}" class="dropdown-item">
+                                        <div class="d-flex gap-3 align-items-center position-relative">
+                                            <div class="d-flex justify-content-center align-items-center">
+                                                <img th:src="${@appContext.serverApiUrl + item.product.imagePath}" width="50" height="50" style="object-fit: contain" />
+                                            </div>
+                                            <div class="d-flex flex-column">
+                                                <strong th:text="${item.product.name}"></strong>
+                                                <div class="mt-1 d-flex gap-3 align-items-center" style="font-size: 0.9em;">
+                                                    <div>
+                                                        <div class="d-flex gap-3 border border-1 rounded" style="padding: 0.2em 0.5em;">
+                                                            <a th:href="${'/shopping-cart/remove/' + item.product.id + '?quantity=1'}">
+                                                                <i class="fa-solid fa-minus"></i>
+                                                            </a>
+                                                            <span th:text="${item.quantity}"></span>
+                                                            <a th:href="${'/shopping-cart/add/' + item.product.id + '?quantity=1'}">
+                                                                <i class="fa-solid fa-plus"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex flex-column">
+                                                        <div>Precio: <span th:text="${'$' + item.product.price}"></span></div>
+                                                        <div>Total: <span th:text="${'$' + item.total}"></span></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <a th:href="${'/shopping-cart/remove/' + item.product.id}" class="position-absolute top-1 end-0 translate-middle badge rounded bg-danger">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </li>
+                                    <li th:if="${@shoppingCart.size > 0}" class="dropdown-item bg-transparent">
+                                        <div class="d-flex justify-content-between py-2" style="border-top: 1px solid #ccc">
+                                            <strong>Total</strong>
+                                            <span th:text="${'$' + @shoppingCart.totalPrice}"></span>
+                                        </div>
+                                    </li>
+                                    <li th:if="${@shoppingCart.size > 0}" class="dropdown-item bg-transparent">
+                                        <div>
+                                            <a href="/checkout" class="btn btn-primary w-100 mt-1">Proceder al pago</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="text-capitalize fs-6 text-reset text-decoration-none" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-user"></i>
+                                    <span class="ms-2" th:text="${authenticatedUser.username}"></span>
+                                </a>
+                                <ul class="dropdown-menu" style="right: 0; left: unset;">
+                                    <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+</body>
+</html>

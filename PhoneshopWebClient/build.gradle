@@ -1,0 +1,99 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.4.0'
+    id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'ec.edu.monster'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+ext.jaxwsSourceDir = "${buildDir}/generated/sources/jaxws"
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    jaxws
+}
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    set('springCloudVersion', "2024.0.0")
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation 'org.springframework.session:spring-session-core'
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.3.0'
+    implementation ('org.springframework.boot:spring-boot-starter-web-services') {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+    }
+    implementation 'com.sun.xml.ws:jaxws-rt:4.0.3'
+    jaxws 'com.sun.xml.ws:jaxws-tools:3.0.0',
+            'jakarta.xml.ws:jakarta.xml.ws-api:3.0.0',
+            'jakarta.xml.bind:jakarta.xml.bind-api:3.0.0',
+            'jakarta.activation:jakarta.activation-api:2.0.0',
+            'com.sun.xml.ws:jaxws-rt:3.0.0'
+    implementation 'org.modelmapper:modelmapper:3.2.1'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+task wsimport {
+    description = 'Generate classes from wsdl using wsimport'
+
+    doLast {
+        project.mkdir(jaxwsSourceDir)
+        ant {
+            taskdef(name: 'wsimport',
+                    classname: 'com.sun.tools.ws.ant.WsImport',
+                    classpath: configurations.jaxws.asPath
+            )
+            wsimport(
+                    keep: true,
+                    destdir: jaxwsSourceDir,
+                    extension: "true",
+                    verbose: true,
+                    wsdl: "$projectDir/src/wsdl/banquito.wsdl",
+                    xnocompile: true,
+                    package: "ec.edu.monster.phoneshop.ws") {
+                xjcarg(value: "-XautoNameResolution")
+            }
+        }
+    }
+}
+
+sourceSets {
+    main {
+        java.srcDirs += jaxwsSourceDir
+    }
+}
+
+compileJava {
+    dependsOn wsimport
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

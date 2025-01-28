@@ -1,0 +1,139 @@
+html, body, #main-content {
+    height: 100%
+}
+
+body {
+    background: #f1f2f6;
+}
+
+#main-content > main {
+    flex: 1;
+    margin-top: 2rem;
+}
+
+#main-content > header > .navbar {
+    background: #fff;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.auth-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 2rem;
+}
+
+.auth-container > .auth-box {
+    width: 100%;
+    max-width: 400px;
+    padding: 2rem;
+    border-radius: 4px;
+    background: #fff;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.auth-container > .auth-box .auth-img {
+    display: block;
+    margin: 0 auto 2rem;
+    width: 100px;
+    background: #f1f2f6;
+    text-align: center;
+    line-height: 100px;
+    font-size: 2rem;
+    color: #333;
+}
+
+.transaction-form,
+.box-container {
+    padding: 1.5rem;
+    border-radius: 4px;
+    background: #fff;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.user-movements {
+    margin-top: 2rem;
+    overflow-y: auto;
+}
+
+.shopping-cart-dropdown .dropdown-item.active,
+.shopping-cart-dropdown .dropdown-item:active {
+    color: unset!important;
+    background: transparent!important;
+}
+
+.checkout-container {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+}
+
+.checkout-container .cart-item {
+    border-bottom: 1px solid #eee;
+    padding: 20px 0;
+}
+
+.checkout-container .product-image {
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    padding: 10px;
+    width: 100%;
+    max-width: 325px;
+    height: 100%;
+    object-fit: contain;
+}
+
+.checkout-container .stock-status {
+    font-size: 0.9rem;
+}
+
+.checkout-container .in-stock {
+    color: #28a745;
+}
+
+.checkout-container .coming-soon {
+    color: #6c757d;
+}
+
+.checkout-container .out-stock {
+    color: #dc3545;
+}
+
+.checkout-container .quantity-control {
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 5px 15px;
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.checkout-container .quantity-control a {
+    border: none;
+    background: none;
+    color: #6c757d;
+    font-size: 1.2rem;
+    padding: 0 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.checkout-container .action-buttons button {
+    background: none;
+    border: none;
+    color: #6c757d;
+    padding: 5px 10px;
+}
+
+.checkout-container .size-color-select {
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 5px 15px;
+    background-color: white;
+    min-width: 120px;
+}
+
+.checkout-container > .products {
+    flex: 1;
+}
