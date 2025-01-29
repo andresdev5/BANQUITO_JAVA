@@ -15,6 +15,7 @@
       <h2 class="alert-heading">Compra realizada con éxito</h2>
       <p>Se ha generado una factura con los detalles de la compra.</p>
       <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#invoiceModal">Ver factura</a>
+      <a th:href="${@appContext.serverApiUrl + '/public/download/invoice?invoiceUrl=' + purchaseResult.invoicePath}" class="btn btn-primary me-5">Descargar factura</a>
     </div>
   </div>
   <div class="products-form" th:if="${purchaseResult == null}">
