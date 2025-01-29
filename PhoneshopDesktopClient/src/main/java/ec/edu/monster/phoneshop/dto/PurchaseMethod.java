@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum PurchaseMethod {
     CASH("EFECTIVO"),
-    CREDIT("CREDITO");
+    CREDIT("CRÉDITO");
 
     private final String label;
 
