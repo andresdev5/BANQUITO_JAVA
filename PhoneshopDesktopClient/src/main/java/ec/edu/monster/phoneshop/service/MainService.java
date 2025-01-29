@@ -15,23 +15,7 @@ public class MainService {
         client = applicationContext.buildFeignClient(PhoneShopServerClient.class);
     }
 
-    public List<MovementDto> getCurrentUserMovements() {
-        return client.getMovements(applicationContext.getToken());
-    }
-
-    public void transfer(TransactionDto transaction) {
-        client.transfer(applicationContext.getToken(), transaction);
-    }
-
-    public List<ProductDto> getProducts() {
-        return client.getPhones();
-    }
-
     public CheckCreditResultDto checkCredit(CheckCreditRequestDto request) {
         return client.checkCredit(request);
-    }
-
-    public PurchaseResultDto purchase(PurchaseRequestDto request) {
-        return client.purchase(request);
     }
 }

@@ -2,22 +2,25 @@ package ec.edu.monster.phoneshop.controller;
 
 import ec.edu.monster.phoneshop.App;
 import ec.edu.monster.phoneshop.common.ApplicationContext;
-import ec.edu.monster.phoneshop.dto.AuthCredentialsDto;
-import ec.edu.monster.phoneshop.dto.AuthResponseDto;
-import ec.edu.monster.phoneshop.dto.ResponseStatus;
+import ec.edu.monster.phoneshop.dto.*;
 import ec.edu.monster.phoneshop.service.AuthService;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+
 /**
  *
  * @author Andres
  */
-public class LoginController {
+public class LoginController implements Initializable {
     private final AuthService authService = new AuthService();
     private final ApplicationContext applicationContext = ApplicationContext.getInstance();
 
@@ -41,22 +44,21 @@ public class LoginController {
     @FXML
     private BorderPane loginMessageWrapper;
 
-    public LoginController() {}
+    @FXML
+    private ChoiceBox<ApiCommunicationType> communicationTypeInput = new ChoiceBox<>();
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        communicationTypeInput.getItems().addAll(ApiCommunicationType.values());
+        communicationTypeInput.getSelectionModel().selectFirst();
+    }
 
     @FXML
     public void submit() {
         String username = usernameField.getText().trim();
         String password = passwordField.getText();
         String serverIp = serverIpField.getText();
-        String port;
-
-        if (serverIp.contains(":")) {
-            String[] parts = serverIp.split(":");
-            serverIp = parts[0];
-            port = parts[1];
-        } else {
-            port = "9001";
-        }
+        ApiCommunicationType apiCommunicationType = communicationTypeInput.getValue();
 
         loginMessageWrapper.setVisible(false);
         usernameField.getStyleClass().remove("error");
@@ -74,21 +76,20 @@ public class LoginController {
             return;
         }
 
-        applicationContext.setServerHost(serverIp);
-        applicationContext.setServerPort(port);
-
         try {
-            AuthResponseDto response = authService.login(AuthCredentialsDto.builder()
+            AuthResponseDto response = authService.login(LoginRequestDto.builder()
                     .username(username)
                     .password(password)
+                    .serverIp(serverIp)
+                    .apiCommunicationType(apiCommunicationType)
                     .build());
 
             if (response.getStatus() == ResponseStatus.SUCCESS) {
                 System.out.println("Token: " + response.getToken());
                 System.out.println("Identification Number: " + response.getUser().getIdentificationNumber());
 
-                applicationContext.setToken(response.getToken());
-                applicationContext.setIdentificationNumber(response.getUser().getIdentificationNumber());
+                applicationContext.setAuthToken(response.getToken());
+                applicationContext.setAuthenticatedUser(response.getUser());
                 showAuthMessage(MessageStatus.SUCCESS, "Se ha ingresado correctamente!");
                 new Thread(() -> {
                     try {

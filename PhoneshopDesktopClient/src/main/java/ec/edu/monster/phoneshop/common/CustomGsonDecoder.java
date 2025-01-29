@@ -4,6 +4,7 @@ import com.google.gson.*;
 import feign.gson.GsonDecoder;
 
 import java.lang.reflect.Type;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
@@ -12,6 +13,18 @@ import java.time.temporal.ChronoField;
 public class CustomGsonDecoder extends GsonDecoder {
     public CustomGsonDecoder(){
         super(new GsonBuilder()
+                .registerTypeAdapter(LocalDate.class, new JsonDeserializer<LocalDate>() {
+                    @Override
+                    public LocalDate deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+                        DateTimeFormatter formatter = new DateTimeFormatterBuilder()
+                                .appendPattern("yyyy-MM-dd")
+                                .toFormatter();
+
+                        return LocalDate.parse(json.getAsJsonPrimitive().getAsString(), formatter);
+                    }
+                })
+                .registerTypeAdapter(LocalDate.class, (JsonSerializer<LocalDate>) (localDate, type, jsonSerializationContext)
+                        -> new JsonPrimitive(localDate.toString()))
                 .registerTypeAdapter(LocalDateTime.class, new JsonDeserializer<LocalDateTime>() {
                     @Override
                     public LocalDateTime deserialize(JsonElement json, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
@@ -24,11 +37,7 @@ public class CustomGsonDecoder extends GsonDecoder {
 
                         return LocalDateTime.parse(json.getAsJsonPrimitive().getAsString(), formatter);
                     }
-                }).registerTypeAdapter(LocalDateTime.class, new JsonSerializer<LocalDateTime>() {
-                    @Override
-                    public JsonElement serialize(LocalDateTime localDateTime, Type type, JsonSerializationContext jsonSerializationContext) {
-                        return new JsonPrimitive(localDateTime.toString());
-                    }
-                }).create());
+                }).registerTypeAdapter(LocalDateTime.class, (JsonSerializer<LocalDateTime>) (localDateTime, type, jsonSerializationContext)
+                        -> new JsonPrimitive(localDateTime.toString())).create());
     }
 }

@@ -1,7 +1,6 @@
 package ec.edu.monster.phoneshop.dto;
 
 import ec.edu.monster.phoneshop.enums.MovementType;
-import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,7 +20,6 @@ public class MovementDto {
 
     private MovementType type;
 
-    @Min(0)
     private BigDecimal amount;
 
     private BigInteger number;

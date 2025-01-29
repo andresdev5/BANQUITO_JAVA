@@ -163,6 +163,7 @@ public class PurchaseServiceImpl implements PurchaseService {
         OutputStream outputStream = new FileOutputStream(outputFile);
         JasperPrint jasperPrint = JasperFillManager.fillReport(report.getAbsolutePath(), parameters, new JREmptyDataSource());
         JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
+        JasperExportManager.exportReportToHtmlFile(jasperPrint, path.resolveSibling(filename.replace(".pdf", ".html")).toString());
         outputStream.close();
 
         return "/" + path.toString().replace("\\", "/");

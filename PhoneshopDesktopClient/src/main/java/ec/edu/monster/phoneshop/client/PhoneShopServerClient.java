@@ -6,29 +6,36 @@ import feign.Param;
 import feign.RequestLine;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface PhoneShopServerClient {
     @RequestLine("POST /auth/login")
-    @Headers("Content-Type: application/json")
     AuthResponseDto login(AuthCredentialsDto credentials);
 
     @RequestLine("GET /movements")
-    @Headers("Content-Type: application/json")
     List<MovementDto> getMovements();
 
     @RequestLine("POST /transactions/transfer")
-    @Headers("Content-Type: application/json")
     void transfer(TransactionDto transaction);
 
     @RequestLine("POST /public/credit/check")
-    @Headers("Content-Type: application/json")
     CheckCreditResultDto checkCredit(CheckCreditRequestDto request);
 
     @RequestLine("GET /public/products")
-    @Headers("Content-Type: application/json")
-    List<ProductDto> getPhones();
+    List<ProductDto> getProducts();
+
+    @RequestLine("GET /public/products/{id}")
+    ProductDto getProduct(@Param("id") UUID id) throws Exception;
+
+    @RequestLine("PUT /public/products")
+    ProductDto updateProduct(ProductDto product) throws Exception;
+
+    @RequestLine("POST /public/products")
+    ProductDto createProduct(ProductDto product) throws Exception;
+
+    @RequestLine("DELETE /public/products/{id}")
+    void deleteProduct(@Param("id") UUID id) throws Exception;
 
     @RequestLine("POST /public/purchase")
-    @Headers("Content-Type: application/json")
-    PurchaseResultDto purchase(PurchaseRequestDto request);
+    PurchaseResponseDto purchase(PurchaseRequestDto request);
 }

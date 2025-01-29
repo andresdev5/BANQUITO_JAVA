@@ -2,7 +2,10 @@ package ec.edu.monster.phoneshop.service.impl;
 
 import ec.edu.monster.phoneshop.dto.ProductDto;
 import ec.edu.monster.phoneshop.entity.Product;
+import ec.edu.monster.phoneshop.entity.Sale;
 import ec.edu.monster.phoneshop.repository.ProductRepository;
+import ec.edu.monster.phoneshop.repository.SaleDetailRepository;
+import ec.edu.monster.phoneshop.repository.SaleRepository;
 import ec.edu.monster.phoneshop.service.ProductService;
 import ec.edu.monster.phoneshop.util.TextUtils;
 import jakarta.transaction.Transactional;
@@ -36,6 +39,8 @@ import java.util.logging.Logger;
 public class ProductServiceImpl implements ProductService {
     private final Logger logger = Logger.getLogger(ProductServiceImpl.class.getName());
     private final ProductRepository productRepository;
+    private final SaleDetailRepository saleDetailRepository;
+    private final SaleRepository saleRepository;
     private final ModelMapper modelMapper;
 
     @Override
@@ -104,6 +109,10 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProduct(UUID id) throws Exception {
         Product product = productRepository.findById(id).orElseThrow(() -> new ResponseStatusException(
                 HttpStatus.NOT_FOUND, "Producto no encontrado"));
+
+        List<Sale> sales = saleDetailRepository.getAllSalesByProductId(id);
+        saleDetailRepository.deleteAllByProductId(id);
+        saleRepository.deleteAll(sales);
 
         if (product.getImage() != null) {
             Path path = Paths.get(product.getImage().substring(1));

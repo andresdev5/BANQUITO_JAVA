@@ -1,5 +1,8 @@
 package ec.edu.monster.phoneshop;
 
+import ec.edu.monster.phoneshop.dto.ApiCommunicationType;
+import ec.edu.monster.phoneshop.dto.LoginRequestDto;
+import ec.edu.monster.phoneshop.service.AuthService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,11 +18,14 @@ import javafx.stage.Screen;
  */
 public class App extends Application {
     private static Scene scene;
+    private static Stage stage;
+    private final AuthService authService = new AuthService();
 
     @Override
     public void start(Stage stage) throws IOException {
+        this.stage = stage;
         Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
-        scene = new Scene(loadFXML("login"), 826, 491);
+        scene = new Scene(loadFXML("login"));
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
@@ -31,7 +37,10 @@ public class App extends Application {
 
     public static void setRoot(String fxml) {
         try {
-            scene.setRoot(loadFXML(fxml));
+            Parent root = loadFXML(fxml);
+            scene.setRoot(root);
+            stage.sizeToScene();
+            scene.getWindow().centerOnScreen();
         } catch (Exception ex) {
             ex.printStackTrace();
         }

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1165.0" stylesheets="@general.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.monster.phoneshop.controller.view.ProductFormViewController">
+   <children>
+      <HBox alignment="CENTER" prefHeight="30.0" prefWidth="1165.0">
+         <children>
+            <Label fx:id="viewTitleLabel" text="Agregar producto">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Separator prefWidth="200.0" visible="false" HBox.hgrow="ALWAYS" />
+         </children>
+         <VBox.margin>
+            <Insets top="15.0" />
+         </VBox.margin>
+      </HBox>
+      <Separator prefWidth="200.0">
+         <VBox.margin>
+            <Insets bottom="15.0" top="15.0" />
+         </VBox.margin>
+      </Separator>
+      <VBox prefWidth="100.0" VBox.vgrow="ALWAYS">
+         <VBox.margin>
+            <Insets bottom="25.0" />
+         </VBox.margin>
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label text="Nombre:">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextField fx:id="nameInput" minHeight="35.0" prefHeight="35.0" prefWidth="1115.0" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label text="Precio:">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <TextField fx:id="priceInput" minHeight="35.0" prefHeight="35.0" prefWidth="1115.0" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </VBox>
+                  <VBox minHeight="150.0" prefWidth="100.0">
+                     <children>
+                        <Label text="Imagen:">
+                           <VBox.margin>
+                              <Insets bottom="5.0" />
+                           </VBox.margin>
+                        </Label>
+                        <GridPane minHeight="100.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="100.0" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="503.0" minWidth="10.0" prefWidth="151.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="934.0" minWidth="10.0" prefWidth="864.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="150.0" prefHeight="150.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <VBox prefHeight="150.0" prefWidth="100.0" style="-fx-background-color: #dfe4ea;">
+                                 <children>
+                                    <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
+                                 </children>
+                              </VBox>
+                              <Button fx:id="chooseFileButton" minHeight="35.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="155.0" text="Seleccionar archivo" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.valignment="TOP">
+                                 <GridPane.margin>
+                                    <Insets left="25.0" />
+                                 </GridPane.margin>
+                              </Button>
+                              <TextField fx:id="filePathInput" editable="false" minHeight="35.0" prefHeight="35.0" GridPane.columnIndex="2" GridPane.valignment="TOP">
+                                 <GridPane.margin>
+                                    <Insets left="10.0" />
+                                 </GridPane.margin>
+                              </TextField>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </VBox>
+               </children>
+            </VBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="saveButton" mnemonicParsing="false" text="Guardar">
+                     <styleClass>
+                        <String fx:value="app-button" />
+                        <String fx:value="primary" />
+                     </styleClass>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+   <padding>
+      <Insets left="25.0" right="25.0" />
+   </padding>
+</VBox>
