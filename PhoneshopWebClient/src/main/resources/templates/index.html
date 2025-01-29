@@ -18,7 +18,7 @@
             <table class="table">
                 <thead class="thead-light">
                 <tr>
-                    <th scope="col">Codigo</th>
+                    <th scope="col">Código</th>
                     <th scope="col">Nombre</th>
                     <th scope="col">Precio</th>
                     <th scope="col">Imagen</th>
@@ -56,10 +56,10 @@
         </div>
 
         <div class="transaction-form">
-            <h3>Verificar Credito</h3>
+            <h3>Verificar Crédito</h3>
 
             <div th:if="${creditMessage}" class="alert alert-danger mt-2 mb-2" role="alert" th:text="${creditMessage}"></div>
-            <div th:if="${creditMaxAmount}" class="alert alert-info mt-2 mb-2" role="alert">Tienes un monto maximo de <span th:text="${creditMaxAmount}"></span></div>
+            <div th:if="${creditMaxAmount}" class="alert alert-info mt-2 mb-2" role="alert">Tienes un monto máximo de <span th:text="${creditMaxAmount}"></span></div>
 
             <form method="POST" action="/checkCredit">
                 <div class="mb-3">
