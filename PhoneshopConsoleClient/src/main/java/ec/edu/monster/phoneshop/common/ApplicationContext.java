@@ -14,6 +14,7 @@ public class ApplicationContext {
     private static ApplicationContext instance;
 
     private String serverIp;
+    private String serverPort;
     private String token;
     private String identificationNumber;
 
@@ -34,6 +35,7 @@ public class ApplicationContext {
                 .encoder(new GsonEncoder())
                 .errorDecoder(new FeignErrorDecoder())
                 .logLevel(Logger.Level.FULL)
-                .target(clazz, "http://" + ((serverIp == null || serverIp.trim().isBlank()) ? "localhost" : serverIp) + ":9001");
+                .target(clazz, "http://" + ((serverIp == null || serverIp.trim().isBlank()) ? "localhost" : serverIp) +
+                        ":" + ((serverPort == null || serverPort.trim().isBlank()) ? "9001" : serverPort));
     }
 }

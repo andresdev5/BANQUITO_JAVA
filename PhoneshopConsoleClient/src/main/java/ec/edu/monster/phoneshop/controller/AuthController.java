@@ -18,7 +18,19 @@ public class AuthController {
         String password = commandLine.password("Contraseña: ");
         String serverIp = commandLine.prompt("IP del servidor: ");
 
-        applicationContext.setServerIp(serverIp);
+        String host = "localhost";
+        String port = "9001";
+
+        if (serverIp.contains(":")) {
+            String[] parts = serverIp.split(":");
+            host = parts[0];
+            port = parts[1];
+        } else {
+            host = serverIp;
+        }
+
+        applicationContext.setServerIp(host);
+        applicationContext.setServerPort(port);
 
         try {
             AuthResponseDto response = authService.login(AuthCredentialsDto.builder()
