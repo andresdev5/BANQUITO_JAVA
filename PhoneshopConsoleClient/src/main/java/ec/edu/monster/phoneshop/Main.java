@@ -12,7 +12,7 @@ public class Main {
         AuthController authController = new AuthController();
         authController.login();
 
-        System.out.println("Bienvenido a EurekaBank");
+        System.out.println("Bienvenido a BanQuito");
 
         MainController mainController = new MainController();
         mainController.init();
