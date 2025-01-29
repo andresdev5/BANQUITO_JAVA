@@ -30,7 +30,7 @@ public interface PhoneShopServerClient {
     @Headers("Content-Type: application/json")
     CheckCreditResultDto checkCredit(CheckCreditRequestDto request);
 
-    @RequestLine("GET /public/phones")
+    @RequestLine("GET /public/products")
     @Headers("Content-Type: application/json")
     List<ProductDto> getPhones();
 
