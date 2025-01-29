@@ -1,0 +1,81 @@
+.app-button {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333;
+    -fx-padding: 7px 10px 7px 10px;
+}
+
+.app-button.sm {
+    -fx-font-size: 12px;
+    -fx-padding: 5px 10px 5px 10px;
+}
+
+.app-button.primary {
+    -fx-background-color: #007bff;
+    -fx-text-fill: #fff;
+}
+
+.app-button.primary:hover {
+    -fx-background-color: #0069d9;
+}
+
+.app-button.primary:pressed {
+    -fx-background-color: #0056b3;
+}
+
+.app-button.primary:disabled {
+    -fx-background-color: #6c757d;
+}
+
+.app-button.primary:default {
+    -fx-background-color: #0069d9;
+}
+
+.app-button.danger {
+    -fx-background-color: #dc3545;
+    -fx-text-fill: #fff;
+}
+
+.app-button.danger:hover {
+    -fx-background-color: #c82333;
+}
+
+.app-button.danger:pressed {
+    -fx-background-color: #b21f2f;
+}
+
+.app-button.secondary {
+    -fx-background-color: #6c757d;
+    -fx-text-fill: #fff;
+}
+
+.app-button.secondary:hover {
+    -fx-background-color: #5a6268;
+}
+
+.app-button.secondary:pressed {
+    -fx-background-color: #484f54;
+}
+
+.snackbar {
+    -fx-background-color: #343a40;
+}
+
+.snackbar .text {
+    -fx-fill: #fff;
+}
+
+.snackbar.success {
+    -fx-background-color: #27ae60;
+}
+
+.snackbar.error {
+    -fx-background-color: #c0392b;
+}
+
+.snackbar.warning {
+    -fx-background-color: #f39c12;
+}
+
+.snackbar.info {
+    -fx-background-color: #2980b9;
+}

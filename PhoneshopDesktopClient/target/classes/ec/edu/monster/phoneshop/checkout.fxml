@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1165.0" stylesheets="@general.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ec.edu.monster.phoneshop.controller.view.CheckoutViewController">
+   <children>
+      <HBox alignment="CENTER" prefHeight="30.0" prefWidth="1165.0">
+         <children>
+            <Label fx:id="viewTitleLabel" text="Proceder al pago">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Separator prefWidth="200.0" visible="false" HBox.hgrow="ALWAYS" />
+         </children>
+         <VBox.margin>
+            <Insets top="15.0" />
+         </VBox.margin>
+      </HBox>
+      <Separator prefWidth="200.0">
+         <VBox.margin>
+            <Insets bottom="15.0" top="15.0" />
+         </VBox.margin>
+      </Separator>
+      <VBox prefWidth="100.0" VBox.vgrow="ALWAYS">
+         <VBox.margin>
+            <Insets bottom="25.0" />
+         </VBox.margin>
+         <children>
+            <VBox minHeight="400.0" prefWidth="100.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <GridPane VBox.vgrow="ALWAYS">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="70.0" prefWidth="100.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="30.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <VBox alignment="TOP_CENTER" style="-fx-background-color: white; -fx-background-radius: 4;">
+                           <GridPane.margin>
+                              <Insets right="15.0" />
+                           </GridPane.margin>
+                           <children>
+                              <ScrollPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                                 <content>
+                                    <VBox fx:id="cartItemsContainerVBox" prefWidth="750.0" />
+                                 </content>
+                              </ScrollPane>
+                           </children>
+                        </VBox>
+                        <VBox style="-fx-background-color: white; -fx-background-radius: 4;" GridPane.columnIndex="1">
+                           <children>
+                              <GridPane prefWidth="304.0">
+                                 <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints />
+                                    <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                 </rowConstraints>
+                                 <children>
+                                    <Label text="Subtotal" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="subtotalLabel" text="{{subtotal}}" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Label text="IVA 15%" GridPane.rowIndex="2">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="taxAmountLabel" text="{{tax}}" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Label text="Total" GridPane.rowIndex="3">
+                                       <font>
+                                          <Font name="System Bold" size="12.0" />
+                                       </font>
+                                    </Label>
+                                    <Label fx:id="totalLabel" text="{{total}}" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                                 </VBox.margin>
+                              </GridPane>
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <Label text="Verificar crédito">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="304.0">
+                                       <children>
+                                          <TextField fx:id="checkCreditValueInput" prefHeight="33.0" prefWidth="215.0">
+                                             <HBox.margin>
+                                                <Insets right="15.0" />
+                                             </HBox.margin>
+                                          </TextField>
+                                          <Button fx:id="checkCreditButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Verificar">
+                                             <styleClass>
+                                                <String fx:value="app-button" />
+                                                <String fx:value="secondary" />
+                                             </styleClass>
+                                          </Button>
+                                       </children>
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" />
+                                       </VBox.margin>
+                                    </HBox>
+                                    <Label text="Método de pago">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <ComboBox fx:id="paymentMethodComboBox" prefHeight="30.0" prefWidth="304.0" />
+                                    <Label text="Total meses">
+                                       <VBox.margin>
+                                          <Insets bottom="5.0" top="10.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <Spinner fx:id="totalMonthsSpinner" disable="true" prefHeight="29.0" prefWidth="304.0" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                                 </padding>
+                              </VBox>
+                              <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="200.0">
+                                 <children>
+                                    <Button fx:id="checkoutButton" mnemonicParsing="false" text="Completar pago">
+                                       <styleClass>
+                                          <String fx:value="app-button" />
+                                          <String fx:value="primary" />
+                                       </styleClass>
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Button>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                                 </VBox.margin>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets top="15.0" />
+                           </padding>
+                        </VBox>
+                     </children>
+                  </GridPane>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+   <padding>
+      <Insets left="25.0" right="25.0" />
+   </padding>
+</VBox>

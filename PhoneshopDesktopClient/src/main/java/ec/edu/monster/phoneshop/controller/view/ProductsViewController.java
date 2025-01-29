@@ -80,7 +80,7 @@ public class ProductsViewController extends BaseView {
     }
 
     private void handleProductListItemDeleted(ProductListItemController.ProductListEventParam event) {
-        boolean confirmed = MessageBoxService.getInstance().confirm("Confirmación", "Esta seguro que desea eliminar el producto?");
+        boolean confirmed = MessageBoxService.getInstance().confirm("Confirmación", "Está seguro que desea eliminar el producto?");
 
         if (!confirmed) {
             return;
