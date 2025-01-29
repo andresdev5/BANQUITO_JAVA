@@ -49,7 +49,7 @@
 			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
 		</conditionalStyle>
 	</style>
-	<style name="Table 1_TH" mode="Opaque" backcolor="#73B0E6">
+	<style name="Table 1_TH" mode="Opaque" backcolor="#E9967A">
 		<box>
 			<pen lineWidth="0.5" lineColor="#000000"/>
 			<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -58,7 +58,7 @@
 			<rightPen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
-	<style name="Table 1_CH" mode="Opaque" backcolor="#CFDBE6">
+	<style name="Table 1_CH" mode="Opaque" backcolor="#FFCFBF">
 		<box>
 			<pen lineWidth="0.5" lineColor="#000000"/>
 			<topPen lineWidth="0.5" lineColor="#000000"/>
@@ -126,7 +126,7 @@
 		<element kind="staticText" uuid="b96f7183-44f8-43ad-ba60-43d8fbf50b6e" x="95" y="25" width="210" height="15">
 			<text><![CDATA[Av. Gral. Rumiñahui S/N, Sangolquí]]></text>
 		</element>
-		<element kind="staticText" uuid="12b9d4da-014e-46fa-93fc-512d89dfbd18" x="0" y="0" width="80" height="55" forecolor="#34495E" markup="none" fontSize="39.0" bold="true" underline="true" hTextAlign="Center">
+		<element kind="staticText" uuid="12b9d4da-014e-46fa-93fc-512d89dfbd18" x="0" y="0" width="80" height="55" forecolor="#E66767" markup="none" fontSize="39.0" bold="true" underline="true" hTextAlign="Center">
 			<text><![CDATA[PS]]></text>
 		</element>
 		<element kind="staticText" uuid="5d6e4c0a-ead0-47d2-9ba4-a7a4d242df40" x="0" y="55" width="80" height="25" hTextAlign="Center" vTextAlign="Middle">
