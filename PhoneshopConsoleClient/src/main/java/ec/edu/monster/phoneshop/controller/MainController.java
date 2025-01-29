@@ -25,18 +25,18 @@ public class MainController {
         }
 
         while (true) {
-            commandLine.print("Menú principal\n\n");
+            commandLine.print("Men\u00fa principal\n\n");
             int selectedOption = commandLine.choose("Selecciona una opcion: ",
-                    "Ver telefonos",
-                    "Consultar Crédito disponible",
-                    "Comprar teléfono",
+                    "Ver tel\u00e9fonos",
+                    "Consultar Cr\u00e9dito disponible",
+                    "Comprar tel\u00e9fono",
                     "Salir");
 
             commandLine.print("\n\n");
 
             switch (selectedOption) {
                 case 1:
-                    commandLine.print("Últimos productos");
+                    commandLine.print("\u00faltimos productos");
 
                     code = 1;
                     for (ProductDto product : products) {
@@ -69,14 +69,14 @@ public class MainController {
     }
 
     private String printProduct(ProductDto product, int code) {
-        return String.format("Código: %d\nNombre: %s\nPrecio: %s\n\n",
+        return String.format("C\u00f3digo: %d\nNombre: %s\nPrecio: %s\n\n",
                 code,
                 product.getName(),
                 product.getPrice().toString());
     }
 
     private void checkCredit() {
-        commandLine.print("Consulta de crédito\n");
+        commandLine.print("Consulta de cr\u00e9dito\n");
         Double amount = commandLine.promptDouble("Monto a solicitar: ");
         try {
             String identificationNumber = ApplicationContext.getInstance().getIdentificationNumber();
@@ -87,9 +87,9 @@ public class MainController {
                     .build());
 
             if (result.isEligible()) {
-                commandLine.print(String.format("Tienes un crédito disponible de %s\n", result.getMaxAmount().setScale(2, BigDecimal.ROUND_HALF_UP)));
+                commandLine.print(String.format("Tienes un cr\u00e9dito disponible de %s\n", result.getMaxAmount().setScale(2, BigDecimal.ROUND_HALF_UP)));
             } else {
-                commandLine.print(result.getMessage().isBlank() ? "No eres elegible para un crédito\n" : result.getMessage());
+                commandLine.print(result.getMessage().isBlank() ? "No eres elegible para un cr\u00e9dito\n" : result.getMessage());
             }
         } catch (Exception e) {
             commandLine.print(e.getMessage());
@@ -97,17 +97,17 @@ public class MainController {
     }
 
     private void buyPhone() {
-        commandLine.print("Compra de teléfono\n");
-        int code = commandLine.promptInteger("Código del teléfono: ");
+        commandLine.print("Compra de tel\u00e9fono\n");
+        int code = commandLine.promptInteger("C\u00f3digo del tel\u00e9fono: ");
 
         if (!productsMap.containsKey(code)) {
-            commandLine.print("Código inválido\n");
+            commandLine.print("C\u00f3digo inv\u00e1lido\n");
             buyPhone();
             return;
         }
 
         ProductDto product = productsMap.get(code);
-        int method = commandLine.choose("Método de pago: ", "Efectivo", "Crédito");
+        int method = commandLine.choose("M\u00e9todo de pago: ", "Efectivo", "Cr\u00e9dito");
         PurchaseMethod purchaseMethod = method == 1 ? PurchaseMethod.CASH : PurchaseMethod.CREDIT;
         int months = 0;
 
@@ -128,7 +128,7 @@ public class MainController {
                 return;
             }
 
-            commandLine.print("Compra realizada con éxito\n");
+            commandLine.print("Compra realizada con \u00e9xito\n");
 
             if (purchaseMethod == PurchaseMethod.CREDIT) {
                 commandLine.print("Tabla de amortizacion:\n\n");
@@ -160,7 +160,7 @@ public class MainController {
         commandLine.print("Nueva Transferencia\n");
         String bankAccountReference = commandLine.prompt("Cuenta destino: ");
         Double amount = commandLine.promptDouble("Monto: ");
-        int type = commandLine.choose("Tipo de transacción: ", "Depósito", "Retiro");
+        int type = commandLine.choose("Tipo de transacci\u00f3n: ", "Dep\u00f3sito", "Retiro");
         MovementType movementType = type == 1 ? MovementType.DEPOSIT : MovementType.WITHDRAWAL;
 
         try {

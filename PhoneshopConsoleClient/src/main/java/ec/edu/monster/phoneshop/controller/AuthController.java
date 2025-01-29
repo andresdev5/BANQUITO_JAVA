@@ -41,7 +41,7 @@ public class AuthController {
             if (response.getStatus() == ResponseStatus.SUCCESS) {
                 applicationContext.setToken(response.getToken());
                 applicationContext.setIdentificationNumber(response.getUser().getIdentificationNumber());
-                commandLine.print("Autentificación exitosa");
+                commandLine.print("Autentificaci\u00F3n exitosa");
             } else {
                 commandLine.print(response.getMessage());
                 login();
